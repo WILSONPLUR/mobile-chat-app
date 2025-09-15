@@ -4,14 +4,16 @@ import { TextField } from '../../../ui/components/TextField';
 import { CountrySelector } from '../../../ui/components/CountrySelector';
 import { COLORS } from '../../../constants/colors';
 import { COUNTRIES } from '../../../mock/countries';
+import { useNavigation } from '@react-navigation/native';
 
 const VerificationScreen = () => {
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]); // Default to US
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const {navigate} = useNavigation();
+
   const handleContinue = () => {
-    // Handle continue logic here
-    console.log('Country:', selectedCountry.code, 'Phone:', phoneNumber);
+    navigate('MFA');
   };
 
   return (

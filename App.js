@@ -17,6 +17,7 @@ import HomeScreen from './src/screens/Home';
 import LoginScreen from './src/screens/Auth/Login';
 import VerificationScreen from './src/screens/Auth/Verification';
 import { Button } from './src/ui/components/Button';
+import { MFAScreen } from './src/screens/Auth/MFA';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,14 @@ export default function App() {
             ),
           }} 
         />
+        <Stack.Screen name="MFA" component={MFAScreen} options={{
+            headerShown: true,
+            headerTitle: '',
+            headerTransparent: true,
+            headerLeft: () => (
+              <Button type='back' />
+            ),
+          }} />
       </Stack.Navigator>
       <StatusBar style="auto" />  
     </NavigationContainer>
