@@ -11,13 +11,15 @@ import {
   Mulish_800ExtraBold,
   Mulish_900Black,
 } from '@expo-google-fonts/mulish';
-import {View} from "react-native";
+import {View, Text} from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/Home';
 import LoginScreen from './src/screens/Auth/Login';
 import VerificationScreen from './src/screens/Auth/Verification';
 import { Button } from './src/ui/components/Button';
-import { MFAScreen } from './src/screens/Auth/MFA';
+import MFAScreen from './src/screens/Auth/MFA';
+import SignUpScreen from './src/screens/Auth/SignUp';
+import { COLORS } from './src/constants/colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +61,17 @@ export default function App() {
             headerTransparent: true,
             headerLeft: () => (
               <Button type='back' />
+            ),
+          }} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} options={{
+            headerShown: true,
+            headerTitle: '',
+            headerTransparent: true,
+            headerLeft: () => (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Button type='back' />
+                <Text style={{fontFamily: 'Mulish_600SemiBold', fontSize: 16, color: COLORS.light.textPrimary}}>Your Profile</Text>
+              </View>
             ),
           }} />
       </Stack.Navigator>

@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native'
 import { COLORS } from '../../../constants/colors'
+import { useNavigation } from '@react-navigation/native'
 
-export const MFAScreen = () => {
+const MFAScreen = () => {
   const [code, setCode] = useState(['', '', '', ''])
-  const phoneNumber = '+62 1309 - 1710 - 1920'
+  const { navigate } = useNavigation();
+  const phoneNumber = '+62 1309 - 1710 - 1920';
 
   const handleNumberPress = (number) => {
     const newCode = [...code]
     const emptyIndex = newCode.findIndex(digit => digit === '')
     if (emptyIndex !== -1) {
       newCode[emptyIndex] = number
-      setCode(newCode)
-    }
+      setCode(newCode);
+    };
   }
 
   const handleBackspace = () => {
@@ -31,6 +33,12 @@ export const MFAScreen = () => {
     // Handle resend code logic
     console.log('Resend code')
   }
+
+  useEffect(() => {
+    if (code.every(digit => digit !== '')) {
+      navigate('SignUp');
+    }
+  }, [code, navigate]);
 
   const renderKeypadButton = (number) => (
     <TouchableOpacity
@@ -225,3 +233,5 @@ const styles = StyleSheet.create({
     color: COLORS.light.textPrimary,
   },
 })
+
+export default MFAScreen;
