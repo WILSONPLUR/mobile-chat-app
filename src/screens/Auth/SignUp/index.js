@@ -4,13 +4,15 @@ import { COLORS } from '../../../constants/colors'
 import { TextField } from '../../../ui/components/TextField'
 import { ImagePicker } from '../../../ui/components/ImagePicker'
 import { useNavigation } from '@react-navigation/native'
+import { useAuth } from '../../../context/auth'
 
 const SignUpScreen = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [profileImage, setProfileImage] = useState(null)
   const { navigate } = useNavigation()
-
+  const {setAuthenticated} = useAuth()
+  
   const handleImageSelected = (imageUri, imageInfo) => {
     setProfileImage(imageUri)
     console.log('Image selected:', imageUri)
@@ -19,6 +21,13 @@ const SignUpScreen = () => {
   const handleSave = () => {
     // Handle save logic here
     console.log('Save profile:', { firstName, lastName, profileImage })
+    try {
+      setAuthenticated(true);
+      console.log('Authentication set successfully');
+    } catch (error) {
+      console.error('Error setting authentication:', error);
+    }
+    // No need to navigate manually - the AuthContext change will automatically switch to tab navigator
   }
 
   return (

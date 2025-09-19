@@ -25,6 +25,8 @@ export const TextField = ({
     switch (variant) {
       case 'phone':
         return [styles.container, styles.phoneContainer, containerStyle];
+      case 'search':
+        return [styles.container, styles.searchContainer, containerStyle];
       default:
         return [styles.container, containerStyle];
     }
@@ -34,6 +36,8 @@ export const TextField = ({
     switch (variant) {
       case 'phone':
         return [styles.input, styles.phoneInput, inputStyle];
+      case 'search':
+        return [styles.input, styles.searchInput, inputStyle];
       default:
         return [styles.input, inputStyle];
     }
@@ -73,5 +77,28 @@ const styles = StyleSheet.create({
     color: COLORS.light.textPrimary,
     backgroundColor: COLORS.light.backgroundSecondary,
     fontSize: 16,
-  }
+  },
+  searchContainer: {
+    flex: 1,
+  },
+  searchInput: {
+    color: COLORS.light.textPrimary,
+    backgroundColor: COLORS.light.backgroundSecondary,
+    fontSize: 16,
+    fontFamily: 'Mulish_400Regular',
+    '&:after': {
+      content: '""',
+      position: 'absolute',
+      right: 16,
+      top: 10,
+      width: 24,
+      height: 24,
+      background: 'url(./assets/icons/search-icon.webp) no-repeat center center',
+      backgroundSize: 'contain',
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1,
+    }
+  },
 })

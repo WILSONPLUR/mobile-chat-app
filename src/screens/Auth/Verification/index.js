@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView, KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native'
 import { TextField } from '../../../ui/components/TextField';
 import { CountrySelector } from '../../../ui/components/CountrySelector';
