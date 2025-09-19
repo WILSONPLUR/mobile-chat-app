@@ -1,5 +1,7 @@
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux';
 import { 
   useFonts,
   Mulish_200ExtraLight,
@@ -11,16 +13,19 @@ import {
   Mulish_800ExtraBold,
   Mulish_900Black,
 } from '@expo-google-fonts/mulish';
-import {View} from "react-native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/Home';
-import LoginScreen from './src/screens/Auth/Login';
-import VerificationScreen from './src/screens/Auth/Verification';
-import { Button } from './src/ui/components/Button';
+import { store } from './src/store';
+import { AuthProvider, useAuth } from './src/context/auth';
+import { MainTabNavigator } from './src/components/MainTabNavigator';
+import { AuthStackNavigator } from './src/components/AuthStackNavigator';
 
-const Stack = createNativeStackNavigator();
 
-export default function App() {
+function AppNavigator() {
+  const { authenticated } = useAuth();
+  
+  return authenticated ? <MainTabNavigator /> : <AuthStackNavigator />;
+}
+
+const App = () => {
   let [fontsLoaded] = useFonts({
     Mulish_200ExtraLight, 
     Mulish_300Light, 
@@ -31,31 +36,21 @@ export default function App() {
     Mulish_800ExtraBold, 
     Mulish_900Black, 
   });
-  if(!fontsLoaded) {
+  
+  if (!fontsLoaded) {
     return null;
   }
 
-  else {
-    return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
-        <Stack.Screen 
-          name="Verification" 
-          component={VerificationScreen} 
-          options={{
-            headerShown: true,
-            headerTitle: '',
-            headerTransparent: true,
-            headerLeft: () => (
-              <Button type='back' />
-            ),
-          }} 
-        />
-      </Stack.Navigator>
-      <StatusBar style="auto" />  
-    </NavigationContainer>
+  return (
+    <Provider store={store}>
+      <AuthProvider>
+        <NavigationContainer>
+          <AppNavigator />
+          <StatusBar style="auto" />  
+        </NavigationContainer>
+      </AuthProvider>
+    </Provider>
   );
-  }
-  
-}
+};
+
+export default App;
